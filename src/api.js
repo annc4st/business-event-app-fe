@@ -1,0 +1,94 @@
+import axios from "axios";
+
+const eventsApi = axios.create ({
+    baseURL : "http://localhost:9000/api",
+    withCredentials: true,
+})
+
+export const getEvents = (category) => {
+    let params = {};
+    if (category){
+        params.category = category;
+    }
+ 
+    return  eventsApi.get('/events', {params})
+    .then((response) => {
+        // console.log(response.data)
+        return response.data;
+    })
+}
+
+export const getCategories = () => {
+    return eventsApi.get('/categories')
+    .then((response) => {
+        // console.log(response.data)
+        return response.data;
+    })
+}
+
+export const getEvent = (event_id) => {
+    return eventsApi.get(`/events/${event_id}`)
+    .then((response) => {
+        console.log(response.data)
+        return response.data;
+    })
+    .catch((error) => {
+        throw error;
+    });
+}
+
+export const postEvent = async (newEvent) => {
+    const response = await eventsApi.post(`/events`, newEvent);
+    return response.data;
+}
+
+export const createLocation = async (newLocation) => {
+    const response = await eventsApi.post(`/locations`, newLocation);
+    return response.data;
+}
+
+export const getUser = () => {
+    return eventsApi.get('/auth/user', { withCredentials: true })
+    .then((response) => {
+        // console.log("api.js line 31>> ", response)
+        return response.data
+    })
+}
+
+//add user to guestlist for event when user signs up
+export const addGuest = (event_id, userId) => {
+    return eventsApi.patch(`/events/${event_id}/guests`,  { id: userId })
+    .then((response) => {
+        console.log("api.js line 60>> ",response.data);
+        return response.data;
+    })
+    .catch((error) => {
+        console.error('Error updating guest list:', error);
+        throw error;
+      });
+}
+
+//remove user from guestlist by admin
+export const removeGuest = (event_id, userId) => {
+    return eventsApi.delete(`/events/${event_id}/guests`,  { id: userId })
+    .then((response) => {
+        console.log("api.js line 73>> ",response.data);
+        return response.data;
+    })
+    .catch((error) => {
+        console.error('Error removing  guest from list:', error);
+        throw error;
+      });
+}
+
+export const getGuests = (event_id) => {
+    return eventsApi.get(`/events/${event_id}/guests`)
+    .then((response)=> {
+        console.log("api.js line 85> ",response.data);
+        return response.data;
+    })
+    .catch((error) => {
+        console.error("Getting all guests ", error)
+        throw error;
+    })
+}
