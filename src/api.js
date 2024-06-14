@@ -39,11 +39,7 @@ export const getEvent = (event_id) => {
 
 export const postEvent = async (newEvent) => {
     const response = await eventsApi.post(`/events`, newEvent);
-    return response.data;
-}
-
-export const createLocation = async (newLocation) => {
-    const response = await eventsApi.post(`/locations`, newLocation);
+    console.log("creating event : ", response.data)
     return response.data;
 }
 
@@ -90,5 +86,30 @@ export const getGuests = (event_id) => {
     .catch((error) => {
         console.error("Getting all guests ", error)
         throw error;
+    })
+}
+
+export const getLocations = async() => {
+    const response = await eventsApi.get(`/locations`)
+    return response.data;
+}
+
+export const getLocationById = async(location_id) => {
+    const response = await eventsApi.get(`/locations/${location_id}`)
+    return response.data;
+}
+
+export const createLocation = async (newLocation) => {
+    const response = await eventsApi.post(`/locations`, newLocation);
+    return response.data;
+}
+
+export const deleteLocation = (location_id) => {
+    return eventsApi.delete(`/locations/${location_id}`)
+    .then(() => {
+        console.log(`Location ${location_id} has been deleted successfully`)
+    })
+    .catch((error) => {
+        console.log('Error : ', error)
     })
 }

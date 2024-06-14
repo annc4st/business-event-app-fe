@@ -15,22 +15,22 @@ const Profile = () => {
                     <p>Username: {user.username}</p>
                     <p>Email: {user.email}</p>
                     <img src={user.thumbnail} alt="User Thumbnail" />
-                </div>
-            ) : (
-                <p>You need to login first.</p>
-            )}
+      
+
+                {user.role== "admin" && (
+                  <div className = "admin-part">
+                    <h3>If user is admin</h3>
+                    <p> event name, date, location, guests or number of guests</p>
+                    <Link to={"/create-event"}>Create new event </Link>
+                  </div> 
+                )}
 
             <h2>You signed up for the following events:</h2>
            <p> event name, date, location</p>
-
-          <div className = "admin-part">
-
-          <h3>If user is admin</h3>
-          <p> event name, date, location, guests or number of guests</p>
-
-          <button>Create new event</button>
-
-          </div> 
+           </div>
+          ) : (
+                <p>You need to log in first.</p>
+            )}
     </div>
   )
 }

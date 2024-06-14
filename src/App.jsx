@@ -8,7 +8,9 @@ import Nav from "./components/Nav";
 import Header from "./components/Header";
 
 import Profile from "./components/Profile";
-// import CreateEvent from './components/CreateEvent';
+import LocationsList from "./components/LocationsList";
+import CreateEvent from './components/CreateEvent';
+import CreateLocation from "./components/CreateLocation";
 import "./App.css";
 
 function App() {
@@ -24,8 +26,9 @@ function App() {
             <Route path="/:category" element={<EventsList />} />
             <Route path="/events/:event_id" element={<ViewEvent />} />
             <Route path="/profile" element={<Profile />} />
-
-            {/* <Route path="/create-event" element={<Create />} /> */}
+            <Route path ="/locations" element={<LocationsList />}/>
+            <Route path="/create-location" element={<CreateLocation />} /> 
+            <Route path="/create-event" element={<CreateEvent />} />
  
           </Routes>
     

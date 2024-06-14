@@ -13,33 +13,35 @@ const EventsList = () => {
     const [error, setError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(category || '');
 
-    // getting categories
-    useEffect(()=> {
-        setIsLoading(true)
-        getCategories().then((fetchedCategories) => {
-            // console.log(fetchedCategories);
-            setIsLoading(false);
-            setCategories(fetchedCategories)
-        });
-    },  []);
-
-    //getting events
+    // Fetch categories and events based on selected category
     useEffect(() => {
-        setIsLoading(true);
-        getEvents(selectedCategory).then((fetchedEvents) => {
-            // console.log(fetchedEvents)
-            setIsLoading(false)
-            setEvents(fetchedEvents);
-        })
-        .catch((err) => {
-            setError({message:err.message, status: err.status})
-        });
-    },[selectedCategory]);
+      const fetchCategoriesAndEvents = async () => {
+        try {
+          setIsLoading(true);
+          
+          // Fetch categories
+          const fetchedCategories = await getCategories();
+          setCategories(fetchedCategories);
+          
+          // Fetch events based on selected category
+          const fetchedEvents = await getEvents(selectedCategory);
+          setEvents(fetchedEvents);
+          
+          setIsLoading(false);
+        } catch (err) {
+          console.error('Error fetching data:', err);
+          setError({ message: err.message, status: err.status });
+          setIsLoading(false);
+        }
+      };
+  
+      fetchCategoriesAndEvents();
+    }, [selectedCategory]);
 
-const handleChangeCategory = (catg) => {
-    setSelectedCategory(catg);
-    navigate(`/${catg}`);
-};
+    const handleChangeCategory = (catg) => {
+        setSelectedCategory(catg);
+        navigate(`/${catg}`);
+    };
 
 
     if (isLoading) return <div className="loading-p">loading...</div>;
