@@ -6,8 +6,8 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    //Log in
     useEffect(() => {
         getUser().then((fetchedUser) => {
             // console.log("from usercontext>> ", fetchedUser)
@@ -19,9 +19,23 @@ export const UserProvider = ({ children }) => {
             setLoading(false);
             });
     }, []);
+
+    //log out
+    const logout = async () => {
+        try {
+          await fetch('http://localhost:9000/api/auth/logout', {
+            method: 'GET',
+            credentials: 'include', // Include credentials for cross-origin requests
+          });
+          setUser(null);
+        } catch (error) {
+          console.error('Logout error:', error);
+        }
+      };
+    
     
     return (
-        <UserContext.Provider value={{ user, loading }}>
+        <UserContext.Provider value={{ user, setUser, loading, logout }}>
             {children}
         </UserContext.Provider>
     );

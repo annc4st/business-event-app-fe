@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { UserContext } from '../contexts/UserContext';
 import { postEvent, getCategories, getLocations } from '../api';
+import TimePickerField from './TimePickerField';
 
 const CreateEvent= () => {
     const { user, loading } = useContext(UserContext);
@@ -35,9 +36,9 @@ const CreateEvent= () => {
     event_name: Yup.string().required('Event name is required'),
     description: Yup.string().required('Description is required'),
     startdate: Yup.date().required('Start date is required'),
-    starttime: Yup.string().required('Start time is required'),
+    starttime: Yup.string().required('Start time is required').matches(/^\d{2}:\d{2}:\d{2}$/, 'Invalid time format'),
     enddate: Yup.date().required('End date is required'),
-    endtime: Yup.string().required('End time is required'),
+    endtime: Yup.string().required('End time is required').matches(/^\d{2}:\d{2}:\d{2}$/, 'Invalid time format'),
     ticket_price: Yup.number().min(0, 'Ticket price must be a positive number').required('Ticket price is required'),
     image_url: Yup.string().url('Invalid URL'),
     category: Yup.string().required('Category is required'),
@@ -85,6 +86,7 @@ const CreateEvent= () => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
+
             {({ isSubmitting }) => (
           <Form>
             <div>
@@ -104,7 +106,8 @@ const CreateEvent= () => {
             </div>
             <div>
               <label>Start Time</label>
-              <Field type="time" name="starttime" />
+              {/* <Field type="time" name="starttime" /> */}
+              <TimePickerField name="starttime" label="Start Time" />
               <ErrorMessage name="starttime" component="div" className="error" />
             </div>
             <div>
@@ -114,7 +117,8 @@ const CreateEvent= () => {
             </div>
             <div>
               <label>End Time</label>
-              <Field type="time" name="endtime" />
+              {/* <Field type="time" name="endtime" /> */}
+              <TimePickerField name="endtime" label="End Time" />
               <ErrorMessage name="endtime" component="div" className="error" />
             </div>
             <div>
@@ -160,8 +164,6 @@ const CreateEvent= () => {
 
             
             </div>
-
-
         ) : (
             <p>You need to login first.</p>
         )

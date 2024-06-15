@@ -51,17 +51,17 @@ const EventsList = () => {
     return (
         <div>
         <div className="category-selector">
-        <ul>
+        {/* <ul className="category-ul"> */}
             {categories.map((catg)=> {
                 return (
-                    <li key={catg.slug} 
-                        className={selectedCategory === catg.slug ? "active" : "not-active"}
+                    <div key={catg.slug} 
+                        className={`category $selectedCategory === catg.slug ? "active" : "not-active"}`}
                         onClick={() => handleChangeCategory(catg.slug)}>
                         <Link to={`/${catg.slug}`}>{catg.slug}</Link>
-                    </li>
+                    </div>
                 )
             })}
-        </ul>
+        {/* </ul> */}
 
         </div>
 
@@ -73,15 +73,12 @@ const EventsList = () => {
                 ) : (
             <div className="events-list">
                 {events.map((event) => (
-            
-                        <EventItem key = {event.event_id} event = {event} />
-                
+                    <EventItem key = {event.event_id} event = {event} />
                     ))}
             </div>
-                )}
+            )}
                 
         </div>
-
         </div>
     )
 }

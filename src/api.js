@@ -101,6 +101,7 @@ export const getLocationById = async(location_id) => {
 
 export const createLocation = async (newLocation) => {
     const response = await eventsApi.post(`/locations`, newLocation);
+    console.log("create locations ", response.data)
     return response.data;
 }
 
