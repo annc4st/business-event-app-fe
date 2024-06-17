@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { UserContext } from '../contexts/UserContext';
 import { postEvent, getCategories, getLocations } from '../api';
 import TimePickerField from './TimePickerField';
+import Loading from './errors/Loading';
 
 const CreateEvent= () => {
     const { user, loading } = useContext(UserContext);
@@ -61,6 +62,7 @@ const CreateEvent= () => {
             setSubmitting(false); // Set submitting to false if user is not admin
         }
   }
+  if (isLoading) return <Loading />;
 
  
   return (
@@ -105,8 +107,7 @@ const CreateEvent= () => {
               <ErrorMessage name="startdate" component="div" className="error" />
             </div>
             <div className='form-group'>
-              {/* <label>Start Time</label> */}
-              {/* <Field type="time" name="starttime" /> */}
+      
               <TimePickerField name="starttime" label="Start Time" />
               <ErrorMessage name="starttime" component="div" className="error" />
             </div>
@@ -116,8 +117,7 @@ const CreateEvent= () => {
               <ErrorMessage name="enddate" component="div" className="error" />
             </div>
             <div className='form-group'>
-              {/* <label>End Time</label> */}
-              {/* <Field type="time" name="endtime" /> */}
+   
               <TimePickerField name="endtime" label="End Time" />
               <ErrorMessage name="endtime" component="div" className="error" />
             </div>
