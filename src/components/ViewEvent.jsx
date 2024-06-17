@@ -5,58 +5,59 @@ import { UserContext } from "../contexts/UserContext";
 import { getEvent, addGuest, getGuests, removeGuest } from "../api";
 import ModalAfterSignUp from "./ModalAfterSignUp";
 import AddToCalendar from "./AddToCalendar";
+import NotFound from './errors/NotFound';
+import Loading from "./errors/Loading";
 
 const ViewEvent = () => {
- 
-    const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { event_id } = useParams();
   const [singleEvent, setSingleEvent] = useState(null);
   const [guests, setGuests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [signingUp, setSigningUp] = useState(false);
- 
 
-//   
 
   useEffect(() => {
     setIsLoading(true);
     getEvent(event_id)
       .then((fetchedEvent) => {
-        console.log(fetchedEvent);
+        // console.log(fetchedEvent);
         setSingleEvent(fetchedEvent);
 
         return getGuests(event_id);
-        })
-        .then((fetchedGuests) => {
-            console.log("Fetched guests:", fetchedGuests.guests);
-            setGuests(fetchedGuests.guests || []);
-            setIsLoading(false);
-        })
-        .catch((err) => {
-            setError({ message: err.message, status: err.status });
-            setIsLoading(false);
-            console.log(err);
-        });
+      })
+      .then((fetchedGuests) => {
+        console.log("Fetched guests:", fetchedGuests.guests);
+        setGuests(fetchedGuests.guests || []);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError({ message: err.message, status: err.status });
+        setIsLoading(false);
+        console.log(err);
+      });
   }, [event_id]);
-
-
-
 
   const handleSignUp = () => {
     if (user && user.id) {
       setSigningUp(true);
+      setError(null);
+
+      // Update the guests list locally first
+      const updatedGuests = [...guests, { id: user.id, username: user.username, email: user.email, thumbnail: user.thumbnail }];
+      setGuests(updatedGuests);
 
       // API request to update guests
       addGuest(event_id, user.id)
-        .then((updatedGuests) => {
-          console.log("Successfully signed up:", updatedGuests);
-          setGuests(updatedGuests.guests);
+        .then(() => {
           setSigningUp(false);
         })
         .catch((error) => {
           console.error("Error signing up for event:", error);
-
+          setError("Error signing up. Please try again later.");
+          // revert the local update in case of error
+          setGuests(guests);
           setSigningUp(false);
         });
     } else {
@@ -64,22 +65,15 @@ const ViewEvent = () => {
       alert("You need to sign in to sign up for this event!");
     }
   };
-
-
-let foundGuest = false;
-    for (let i=0; i<guests.length; i++){
-        if(guests[i].id === user.id) {
-            foundGuest = true;
-        }
-    }
-console.log("yay found", foundGuest)
-
-  if (isLoading) return <div className="loading-p">loading...</div>;
-  if (error) return <p>Error: {error.message}</p>;
+ 
+  let foundGuest = guests.some(guest => guest.id === user?.id);
+ 
+  if (isLoading) return <Loading />;
+  if (error) return <NotFound />;
   if (!singleEvent) return <p>No event found.</p>;
 
   return (
-    <section >
+    <section>
       {singleEvent ? (
         <div className="event-section">
           <div className="single-event-img">
@@ -87,41 +81,65 @@ console.log("yay found", foundGuest)
               <img src={singleEvent.image_url} alt={singleEvent.event_name} />
             )}
           </div>
-          <h2>{singleEvent.event_name}</h2>
+          <div className="ev ev-title">
+
+          <h3>{singleEvent.event_name}</h3>
+          </div>
 
           <p>Category: {singleEvent.category}</p>
+          
+          <div className="ev ev-date">
+          <h4>Date: </h4>
           <p>{new Date(singleEvent.start_t).toLocaleString()}</p>
-
+          </div>
+      
+      <div className="ev">
           <AddToCalendar event={singleEvent} />
-
-          <p>
-            Ticket Price:{" "}
-            {singleEvent.ticket_price > 0
+        </div>
+            
+          <div className="ev">
+            <h4>Ticket Price:</h4>{" "}
+            <div className="ticket-price">
+            <p > {singleEvent.ticket_price > 0
               ? `${singleEvent.ticket_price}`
               : "Free"}
-          </p>
-          <p>{singleEvent.description}</p>
-
-          <div>
-            <h3>Attendees:</h3>
-            <p>{guests.length == 0 ? "Be first to sign up" : guests.length}</p>
+          </p></div>
           </div>
-           
-            {(!foundGuest) ? (
-          <button type="button" onClick={handleSignUp} disabled={signingUp}>
-            Sign Up btn
-          </button>
-            ): (
-                <div><p>You have already signed up for this event.</p></div>
-            )}
-          
-          <p></p>
-          <p>
-            Address: {singleEvent.first_line_address},{" "}
+          <div className="ev ev-descrption">
+          <h4>Description</h4>
+          <p>{singleEvent.description}</p>
+          </div>
+
+          <div className="ev ev-guests">
+            <h4>Attendees:</h4>
+            <p>
+            {guests && guests.length > 0
+                ? guests.length
+                : "Be the first to sign up"}
+            </p>
+          </div>
+
+          <div className="ev ev-address">
+          <h4>Address: </h4>
+            <p>{singleEvent.first_line_address},{" "}
             {singleEvent.second_line_address}, {singleEvent.city}{" "}
             {singleEvent.postcode}
           </p>
-          <div>map div</div>
+          </div>
+
+          <div className="ev">
+            {!foundGuest ? (
+              <button type="button" 
+              onClick={handleSignUp} disabled={signingUp}>
+               {signingUp ? "Signing Up..." : "Sign Up"}
+              </button>
+            ) : (
+              <div className="ev ev-already-s">
+                <p >You have already signed up for this event.</p>
+              </div>
+            )}
+          </div>
+          <div className="ev-map"></div>
           <p></p>
         </div>
       ) : (

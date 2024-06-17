@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const eventsApi = axios.create ({
-    baseURL : "http://localhost:9000/api",
+    // baseURL : "http://localhost:9000/api",
+    baseURL : "https://business-event-app.onrender.com/api",
     withCredentials: true,
 })
 
@@ -13,7 +14,6 @@ export const getEvents = (category) => {
  
     return  eventsApi.get('/events', {params})
     .then((response) => {
-        // console.log(response.data)
         return response.data;
     })
 }
@@ -21,7 +21,6 @@ export const getEvents = (category) => {
 export const getCategories = () => {
     return eventsApi.get('/categories')
     .then((response) => {
-        // console.log(response.data)
         return response.data;
     })
 }
@@ -29,7 +28,6 @@ export const getCategories = () => {
 export const getEvent = (event_id) => {
     return eventsApi.get(`/events/${event_id}`)
     .then((response) => {
-        console.log(response.data)
         return response.data;
     })
     .catch((error) => {
@@ -39,17 +37,16 @@ export const getEvent = (event_id) => {
 
 export const postEvent = async (newEvent) => {
     const response = await eventsApi.post(`/events`, newEvent);
-    console.log("creating event : ", response.data)
     return response.data;
 }
 
 export const getUser = () => {
     return eventsApi.get('/auth/user', { withCredentials: true })
     .then((response) => {
-        // console.log("api.js line 31>> ", response)
         return response.data
     })
 }
+
 
 //add user to guestlist for event when user signs up
 export const addGuest = (event_id, userId) => {
@@ -68,11 +65,10 @@ export const addGuest = (event_id, userId) => {
 export const removeGuest = (event_id, userId) => {
     return eventsApi.delete(`/events/${event_id}/guests`,  { id: userId })
     .then((response) => {
-        console.log("api.js line 73>> ",response.data);
         return response.data;
     })
     .catch((error) => {
-        console.error('Error removing  guest from list:', error);
+        // console.error('Error removing  guest from list:', error);
         throw error;
       });
 }
@@ -80,7 +76,7 @@ export const removeGuest = (event_id, userId) => {
 export const getGuests = (event_id) => {
     return eventsApi.get(`/events/${event_id}/guests`)
     .then((response)=> {
-        console.log("api.js line 85> ",response.data);
+        // console.log("api.js line 85> ",response.data);
         return response.data;
     })
     .catch((error) => {
@@ -101,16 +97,16 @@ export const getLocationById = async(location_id) => {
 
 export const createLocation = async (newLocation) => {
     const response = await eventsApi.post(`/locations`, newLocation);
-    console.log("create locations ", response.data)
+    // console.log("create locations ", response.data)
     return response.data;
 }
 
 export const deleteLocation = (location_id) => {
     return eventsApi.delete(`/locations/${location_id}`)
     .then(() => {
-        console.log(`Location ${location_id} has been deleted successfully`)
+        // console.log(`Location ${location_id} has been deleted successfully`)
     })
     .catch((error) => {
-        console.log('Error : ', error)
+        // console.log('Error : ', error)
     })
 }

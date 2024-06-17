@@ -1,5 +1,6 @@
 import {Route, Routes, Link} from "react-router-dom";
-import './EventItem.css';
+ 
+import '../index.css'
 
 const EventItem = ({event}) => {
 return (

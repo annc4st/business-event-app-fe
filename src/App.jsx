@@ -4,22 +4,21 @@ import {UserProvider } from "./contexts/UserContext";
 
 import EventsList from "./components/EventsList";
 import ViewEvent from "./components/ViewEvent";
-import Nav from "./components/Nav";
 import Header from "./components/Header";
 
 import Profile from "./components/Profile";
 import LocationsList from "./components/LocationsList";
 import CreateEvent from './components/CreateEvent';
 import CreateLocation from "./components/CreateLocation";
-import "./App.css";
+import NotFound from "./components/errors/NotFound";
+
 
 function App() {
   return (
     <>
       <UserProvider>
         <Header />
-        <Nav />   
-
+        
         
           <Routes>
             <Route path="/" element={<EventsList />} />
@@ -29,6 +28,7 @@ function App() {
             <Route path ="/locations" element={<LocationsList />}/>
             <Route path="/create-location" element={<CreateLocation />} /> 
             <Route path="/create-event" element={<CreateEvent />} />
+            <Route component={NotFound} />
  
           </Routes>
     

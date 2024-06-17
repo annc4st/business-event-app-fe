@@ -1,38 +1,42 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { Link } from "react-router-dom";
-
+import Loading from "./errors/Loading";
+import "./errors/errors.css";
 
 const Profile = () => {
     const { user, loading } = useContext(UserContext);
-    if (loading) return <p>Loading...</p>;
-    
-  return (
-    <div>
-       {user ? (
-                <div>
-                    <h1>Profile</h1>
-                    <p>Username: {user.username}</p>
-                    <p>Email: {user.email}</p>
-                    <img src={user.thumbnail} alt="User Thumbnail" />
-      
 
-                {user.role== "admin" && (
-                  <div className = "admin-part">
-                    <h3>If user is admin</h3>
-                    <p> event name, date, location, guests or number of guests</p>
-                    <Link to={"/create-event"}>Create new event </Link>
-                  </div> 
-                )}
+    if (loading) return <Loading />;
 
-            <h2>You signed up for the following events:</h2>
-           <p> event name, date, location</p>
-           </div>
-          ) : (
+    return (
+        <div className="page_404">
+            {user ? (
+                <>
+                    <div className="ev fouro-four-title">
+                        <h1>Profile</h1>
+                    </div>
+                    <div className="ev-notf">
+                        <p>userid: {user.id}</p>
+                    </div>
+                    <div className="ev-notf">
+                        <p>Email: {user.email}</p>
+                    </div>
+                    <div className="ev-notf">
+                        <img src={user.thumbnail} alt="User Thumbnail" />
+                    </div>
+                    {user.role === "admin" && (
+                        <div className="admin-part">
+                            <p>If user is admin you can see this</p>
+                            <p><Link to={"/create-event"}>Create new event</Link></p>
+                        </div>
+                    )}
+                </>
+            ) : (
                 <p>You need to log in first.</p>
             )}
-    </div>
-  )
-}
+        </div>
+    );
+};
 
-export default Profile
+export default Profile;

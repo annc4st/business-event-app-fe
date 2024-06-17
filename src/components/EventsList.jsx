@@ -2,6 +2,9 @@ import { getEvents, getCategories } from "../api";
 import EventItem from "./EventItem";
 import React, { useEffect, useState } from "react";
 import {Link, Navigate, useNavigate, useParams} from 'react-router-dom';
+import NotFound from './errors/NotFound';
+import Loading from "./errors/Loading";
+
 
 
 const EventsList = () => {
@@ -44,15 +47,14 @@ const EventsList = () => {
     };
 
 
-    if (isLoading) return <div className="loading-p">loading...</div>;
-    if (error) return <p>No Results Found</p>;
+    if (isLoading) return <Loading />;
+    if (error) return <NotFound />;
     
 
     return (
         <div>
         <div className="category-selector">
-        {/* <ul className="category-ul"> */}
-            {categories.map((catg)=> {
+                  {categories.map((catg)=> {
                 return (
                     <div key={catg.slug} 
                         className={`category $selectedCategory === catg.slug ? "active" : "not-active"}`}
@@ -61,12 +63,10 @@ const EventsList = () => {
                     </div>
                 )
             })}
-        {/* </ul> */}
-
         </div>
 
    
-        <div className="events-container">
+        <div className="events-container ">
             <h2>Events</h2>
             {events.length === 0 ? (
                     <p>No events yet</p>

@@ -65,27 +65,27 @@ const CreateLocation = () => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <div>
+          <div className='form-group'>
               <label>Postcode</label>
               <Field type="text" name="postcode" />
               <ErrorMessage name="postcode" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>First line of address</label>
               <Field type="text" name="first_line_address" />
               <ErrorMessage name="first_line_address" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>Second line of address</label>
               <Field type="text" name="second_line_address" />
               <ErrorMessage name="second_line_address" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>City</label>
               <Field type="text" name="city" />
               <ErrorMessage name="city" component="div" className="error" />
             </div>
-            <button type="submit" disabled={isSubmitting}>
+            <button className="form-btn" type="submit" disabled={isSubmitting}>
               Create Location
             </button>
           </Form>

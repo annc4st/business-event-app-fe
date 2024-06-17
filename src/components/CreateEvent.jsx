@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { UserContext } from '../contexts/UserContext';
@@ -89,49 +89,49 @@ const CreateEvent= () => {
 
             {({ isSubmitting }) => (
           <Form>
-            <div>
+            <div className='form-group'>
               <label>Event Name</label>
               <Field type="text" name="event_name" />
               <ErrorMessage name="event_name" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>Description</label>
               <Field type="text" name="description" />
               <ErrorMessage name="description" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>Start Date</label>
               <Field type="date" name="startdate" />
               <ErrorMessage name="startdate" component="div" className="error" />
             </div>
-            <div>
-              <label>Start Time</label>
+            <div className='form-group'>
+              {/* <label>Start Time</label> */}
               {/* <Field type="time" name="starttime" /> */}
               <TimePickerField name="starttime" label="Start Time" />
               <ErrorMessage name="starttime" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>End Date</label>
               <Field type="date" name="enddate" />
               <ErrorMessage name="enddate" component="div" className="error" />
             </div>
-            <div>
-              <label>End Time</label>
+            <div className='form-group'>
+              {/* <label>End Time</label> */}
               {/* <Field type="time" name="endtime" /> */}
               <TimePickerField name="endtime" label="End Time" />
               <ErrorMessage name="endtime" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>Ticket Price</label>
               <Field type="number" name="ticket_price" step="0.01" />
               <ErrorMessage name="ticket_price" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>Image URL</label>
               <Field type="text" name="image_url" />
               <ErrorMessage name="image_url" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>Category</label>
               <Field as="select" name="category">
                 <option value="" label="Select category" />
@@ -143,7 +143,7 @@ const CreateEvent= () => {
               </Field>
               <ErrorMessage name="category" component="div" className="error" />
             </div>
-            <div>
+            <div className='form-group'>
               <label>Location</label>
               <Field as="select" name="location">
                 <option value="" label="Select location" />
@@ -155,17 +155,23 @@ const CreateEvent= () => {
               </Field>
               <ErrorMessage name="location" component="div" className="error" />
             </div>
-            <button type="submit" disabled={isSubmitting}>
+            <button className="form-btn" type="submit" disabled={isSubmitting}>
               Create Event
             </button>
           </Form>
         )}
       </Formik>
 
+      <div>
+        <p>If you cannot find the location, create it first <Link to={'/create-location'}>here</Link>.</p>
+      </div>
+
             
             </div>
         ) : (
-            <p>You need to login first.</p>
+          <div className="unauth-user">
+            <p>If you want to create new event, contact us.</p>
+            </div>
         )
     }
       
