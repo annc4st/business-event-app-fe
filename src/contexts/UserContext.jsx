@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
     //log out
     const logout = async () => {
         try {
-          await fetch('http://localhost:9000/api/auth/logout', {
+          await fetch('https://business-event-app.onrender.com/api/auth/logout', {
             method: 'GET',
             credentials: 'include', // Include credentials for cross-origin requests
           });

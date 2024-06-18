@@ -45,7 +45,7 @@ const Header = () => {
         <div className="header-greet">
           <div className="logged-user">
             <p>Welcome, Stranger!</p>
-            <a href="http://localhost:9000/api/auth/google">
+            <a href="https://business-event-app.onrender.com/api/auth/google">
               <button>Login with Google+</button>
             </a>
           </div>
