@@ -9,6 +9,10 @@ const Profile = () => {
 
     if (loading) return <Loading />;
 
+    if (!user) {
+        return <div>No user logged in</div>;
+      }
+
     return (
         <div className="page_404">
             {user ? (
@@ -19,12 +23,16 @@ const Profile = () => {
                     <div className="ev-notf">
                         <p>userid: {user.id}</p>
                     </div>
+                   
                     <div className="ev-notf">
                         <p>Email: {user.email}</p>
                     </div>
                     <div className="ev-notf">
-                        <img src={user.thumbnail} alt="User Thumbnail" />
+                        <p>Role: {user.role}</p>
                     </div>
+                    {/* <div className="ev-notf">
+                        <img src={user.role} alt="User Thumbnail" />
+                    </div> */}
                     {user.role === "admin" && (
                         <div className="admin-part">
                             <p>If user is admin you can see this</p>

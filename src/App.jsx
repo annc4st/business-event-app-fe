@@ -11,6 +11,8 @@ import LocationsList from "./components/LocationsList";
 import CreateEvent from './components/CreateEvent';
 import CreateLocation from "./components/CreateLocation";
 import NotFound from "./components/errors/NotFound";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 
 function App() {
@@ -21,6 +23,9 @@ function App() {
         
         
           <Routes>
+            <Route path = "/login" element={<Login />} />
+            {/* <Route path = "/logout" /> */}
+            <Route path="/register" element={<Register />} />
             <Route path="/" element={<EventsList />} />
             <Route path="/:category" element={<EventsList />} />
             <Route path="/events/:event_id" element={<ViewEvent />} />
@@ -29,6 +34,7 @@ function App() {
             <Route path="/create-location" element={<CreateLocation />} /> 
             <Route path="/create-event" element={<CreateEvent />} />
             <Route component={NotFound} />
+
  
           </Routes>
     

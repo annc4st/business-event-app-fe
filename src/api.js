@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const eventsApi = axios.create ({
-    // baseURL : "http://localhost:9000/api",
-    baseURL : "https://business-event-app.onrender.com/api",
+    baseURL : "http://localhost:9000/api",
+    // baseURL : "https://business-event-app.onrender.com/api",
     withCredentials: true,
 })
 
@@ -40,12 +40,13 @@ export const postEvent = async (newEvent) => {
     return response.data;
 }
 
-export const getUser = () => {
-    return eventsApi.get('/auth/user', { withCredentials: true })
-    .then((response) => {
-        return response.data
-    })
-}
+//from auth/google
+// export const getUser = () => {
+//     return eventsApi.get('/auth/user', { withCredentials: true })
+//     .then((response) => {
+//         return response.data
+//     })
+// }
 
 
 //add user to guestlist for event when user signs up
@@ -107,6 +108,51 @@ export const deleteLocation = (location_id) => {
         // console.log(`Location ${location_id} has been deleted successfully`)
     })
     .catch((error) => {
-        // console.log('Error : ', error)
+        console.log('Error : ', error)
     })
 }
+
+// id??
+export const getUserProfile = async () => {
+    try {
+        const response = await eventsApi.get(`/auth/profile` );
+        console.log("api getuserProfile line 119 ", response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      throw error;
+    }
+  };
+
+export const registerUser = async (userData) => {
+    console.log("line 127 userdata: ", userData)
+    try {
+        const response = await eventsApi.post(`/auth/register`, userData)
+        return response.data;
+    } catch(error) {
+        console.error('Error registering user:', error);
+        throw error;
+    }
+}
+
+// Function to login a user
+export const loginUser = async ( credentials) => {
+
+    try {
+        const response = await eventsApi.post(`/auth/login`, credentials);
+      return  response.data
+    } catch (error) {
+      console.error('Error logging in:', error);
+      throw error;
+    }
+  };
+
+  // Function to logout a user
+export const logoutUser = async () => {
+    try {
+       await eventsApi.post(`/auth/logout`);
+    } catch (error) {
+      console.error('Error logging out:', error);
+      throw error;
+    }
+  };

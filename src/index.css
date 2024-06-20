@@ -1,11 +1,12 @@
 :root {
   font-family: 'MPLUS1p-Regular', sans-serif; 
   /* Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
-  line-height: 1.5;
+  line-height: 1.2;
   font-weight: 400;
 
   --text: #FFFFFF;
-  --bg-body: #161616;
+  --bg-body:  #16181D; 
+  /* // #161616; */
   --bg-card: #2e2b2b;
   --btn-color:  #FFFF69;
   --border: #A6CCFF;
@@ -35,7 +36,8 @@ li {
 
 /* base styles */
 body {
-  background: var(--bg-body);
+  background-color: #16181D;
+
   color: var(--text);
   overflow-x: hidden;
   font-size: 16px;
@@ -47,7 +49,6 @@ h1, h2, h3{
 }
 
 button {
-  background-color: var(--btn-color);
   border-radius: 8px; 
   padding: 0.6em 1.2em;
   font-size: 1em;
