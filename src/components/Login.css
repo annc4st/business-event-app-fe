@@ -31,7 +31,7 @@ form input {
     border: 1px solid #ccc;
     border-radius: 5px;
     height: 2.5em;
-    background-color: rgba(170, 173, 175, 1);
+    background-color: var(--bg-card);
 }
 
 ::placeholder {

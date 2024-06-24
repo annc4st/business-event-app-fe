@@ -14,9 +14,7 @@ const Header = () => {
     return null;
   }
   const { user, loading, isLogged} = context;
- 
 
-  if (loading) return <p>Loading...</p>;
   return (
     <header className="header">
       <input className="menu-btn" type="checkbox" id="menu-btn" />

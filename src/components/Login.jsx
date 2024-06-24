@@ -5,12 +5,13 @@ import './Login.css';
 
 const Login = () => {
 
-  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
-  const { login } = useContext(UserContext);
+  const [error, setError ] = useState('');
+  const {login }  = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCredentials({
@@ -22,12 +23,16 @@ const Login = () => {
     e.preventDefault();
     try {
       const success = await login(credentials);
-      if (!success) {
-          console.error("Login failed: Invalid credentials or server error");
-      }
+      if (success) {   
       navigate('/');
+
+      } else {
+        console.error("Login failed: Invalid credentials or server error");
+        setError('Invalid login or password.')
+      }
   } catch (error) {
       console.error("Error logging in:", error);
+      setError(error.message);
   }
   };
 
@@ -35,7 +40,7 @@ const Login = () => {
     <div className="container">
        <div className="form-wrapper">
       <h1>Login</h1>
-     
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleLogin} >
         <input
           onChange={handleChange}
@@ -49,8 +54,7 @@ const Login = () => {
 
         <input
           onChange={handleChange}
-          type="text"
-          name="password"
+          name="password" type="password"
           id="password"
           value={credentials.password}
           placeholder="Enter your password"

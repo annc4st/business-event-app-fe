@@ -17,7 +17,9 @@ const LocationsList = () => {
         });
     },  []);
 
-    if (isLoading) return <div className="loading-p">loading...</div>;
+    if (isLoading) return <div className="loading-container">
+      <div className="loader"></div>
+      </div> ;
     if (error) return <p>No Results Found</p>;
 
 

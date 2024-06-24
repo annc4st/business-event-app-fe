@@ -53,7 +53,7 @@ export const postEvent = async (newEvent) => {
 export const addGuest = (event_id, userId) => {
     return eventsApi.patch(`/events/${event_id}/guests`,  { id: userId })
     .then((response) => {
-        console.log("api.js line 60>> ",response.data);
+        // console.log("api.js line 60>> ",response.data);
         return response.data;
     })
     .catch((error) => {
@@ -116,7 +116,6 @@ export const deleteLocation = (location_id) => {
 export const getUserProfile = async () => {
     try {
         const response = await eventsApi.get(`/auth/profile` );
-        console.log("api getuserProfile line 119 ", response.data)
       return response.data;
     } catch (error) {
       console.error('Error fetching user profile:', error);
@@ -125,13 +124,20 @@ export const getUserProfile = async () => {
   };
 
 export const registerUser = async (userData) => {
-    console.log("line 127 userdata: ", userData)
     try {
         const response = await eventsApi.post(`/auth/register`, userData)
+ 
         return response.data;
     } catch(error) {
-        console.error('Error registering user:', error);
-        throw error;
+ 
+        if (error.response && error.response.data && error.response.data.message) {
+            // console.log()
+           
+            throw new Error(error.response.data.message);
+          } else {
+            console.log(error);
+            throw new Error('An error occurred. Looks like we have account with this username or email.');
+          }
     }
 }
 
@@ -142,8 +148,11 @@ export const loginUser = async ( credentials) => {
         const response = await eventsApi.post(`/auth/login`, credentials);
       return  response.data
     } catch (error) {
-      console.error('Error logging in:', error);
-      throw error;
+        if (error.response && error.response.data && error.response.data.message) {
+            throw new Error(error.response.data.message);
+          } else {
+            throw new Error('An unexpected error occurred.');
+          }
     }
   };
 
@@ -156,3 +165,15 @@ export const logoutUser = async () => {
       throw error;
     }
   };
+
+  // Function to retrieven events user signed up for
+  export const getUserSignedUpEvents = async() => {
+    try {
+        const response = await eventsApi.get(`/auth/profile/events`)
+        return response.data;
+    } catch(error){
+        console.error('Error fetching signed-up events:', error);
+        throw error;
+    }
+
+  }

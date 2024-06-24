@@ -1,14 +1,13 @@
 :root {
-  font-family: 'MPLUS1p-Regular', sans-serif; 
-  /* Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
-  line-height: 1.2;
+  font-family: 'MPLUS1p-Regular', Inter, system-ui, Avenir, Helvetica, sans-serif; 
+   line-height: 1.2;
   font-weight: 400;
 
   --text: #FFFFFF;
   --bg-body:  #16181D; 
   /* // #161616; */
   --bg-card: #2e2b2b;
-  --btn-color:  #FFFF69;
+  --btn-color:  #ffa500;
   --border: #A6CCFF;
   --active-color: #A6CCFF;
 }
@@ -21,8 +20,48 @@ a {
   color:#53b8f2;
 }
 a:hover {
-  color: #535bf2;
+  color: #ffa50097;
 }
+
+.loading-container{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  width: 100%;
+  height: 100vh;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 1000; 
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #0000;
+  border-right-color: #ffa50097;
+  position: relative;
+  animation: l24 1s infinite linear;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: inherit;
+  animation: inherit;
+  animation-duration: 2s;
+}
+.loader:after {
+  animation-duration: 4s;
+}
+@keyframes l24 {
+  100% {transform: rotate(1turn)}
+}
+
 
 /* reset */
 body, p, a, ul, li {
@@ -37,7 +76,6 @@ li {
 /* base styles */
 body {
   background-color: #16181D;
-
   color: var(--text);
   overflow-x: hidden;
   font-size: 16px;
@@ -169,7 +207,7 @@ input, select {
   
  
 /* create event form */
-.create-event, .post-location, .event-section {
+.create-event, .post-location {
    margin: auto;
   margin-top: 1em;
   max-width: 400px;
@@ -178,50 +216,24 @@ input, select {
 .form-group, .react-datepicker-wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.5em; /* Adds space between form groups */
+  margin-bottom: 0.5em; /* space between form groups */
+}
+
+.form-group input {
+  background-color: var(--bg-card);
+  color: var(--text); 
 }
 .form-btn {
   margin: 1em auto 1em auto;
+  background-color: var(--btn-color);
 }
 
+.react-datepicker__input-container {
+  margin-left: 0.5em;
+}
+/* viewEvent -> seprate css */
 
-/* ViewEvent */
-.single-event-img img{
-  max-width: 300px;
-}
-.ev {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1em; 
-
-}
-.ev-title {
-  border: solid 1px var(--border);
-  border-radius: 8px;
-  background-color: var(--bg-card);
-}
-.ev-title > h3{
-font-size: 1.2em;
-font-weight: 200;
-text-align: left;
-/* padding-left: 8px; */
-margin: 8px auto;
-}
-
-.ev-already-s {
-  background-color: var(--bg-card);
-  border: solid 1px var(--border);
-    border-radius: 8px;
-}
-.ticket-price {
-  margin: 8px;
-  background-color: var(--bg-card);
-  border: solid 1px var(--border);
-  border-radius: 8px;
-}
-.ev-already-s > p {
-  margin: 8px auto;
-}
+ 
 
 /* small tablet styles */
 @media screen and (min-width: 620px){

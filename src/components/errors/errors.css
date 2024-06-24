@@ -17,11 +17,11 @@
     border-radius: 8px;
     background-color: var(--bg-card);
   }
-  .fouro-four-title > h1{
+  .fouro-four-title h1{
     text-align: center;
   }
 
-  .ev-notf > h3, p {
+  .ev-notf h3, p {
     font-size: 1.2em;
     font-weight: 200;
     text-align: center;

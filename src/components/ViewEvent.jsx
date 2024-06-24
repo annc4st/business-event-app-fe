@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import Modal from "react-modal";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { getEvent, addGuest, getGuests, removeGuest } from "../api";
-import ModalAfterSignUp from "./ModalAfterSignUp";
 import AddToCalendar from "./AddToCalendar";
-import NotFound from './errors/NotFound';
-import Loading from "./errors/Loading";
+import NotFound from "./errors/NotFound";
+import './ViewEvent.css'
 
 const ViewEvent = () => {
   const { user } = useContext(UserContext);
@@ -16,7 +14,6 @@ const ViewEvent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [signingUp, setSigningUp] = useState(false);
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,14 +25,13 @@ const ViewEvent = () => {
         return getGuests(event_id);
       })
       .then((fetchedGuests) => {
-        console.log("Fetched guests:", fetchedGuests.guests);
         setGuests(fetchedGuests.guests || []);
         setIsLoading(false);
       })
-      .catch((err) => {
+      .catch((error) => {
         setError({ message: err.message, status: err.status });
         setIsLoading(false);
-        console.log(err);
+        console.error(error);
       });
   }, [event_id]);
 
@@ -45,7 +41,15 @@ const ViewEvent = () => {
       setError(null);
 
       // Update the guests list locally first
-      const updatedGuests = [...guests, { id: user.id, username: user.username, email: user.email, thumbnail: user.thumbnail }];
+      const updatedGuests = [
+        ...guests,
+        {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          thumbnail: user.thumbnail,
+        },
+      ];
       setGuests(updatedGuests);
 
       // API request to update guests
@@ -65,85 +69,125 @@ const ViewEvent = () => {
       alert("You need to sign in to sign up for this event!");
     }
   };
- 
-  let foundGuest = guests.some(guest => guest.id === user?.id);
- 
-  if (isLoading) return <Loading />;
+
+  let foundGuest = guests.some((guest) => guest.id === user?.id);
+
+  if (isLoading)
+    return (
+      <div className="loading-container">
+        <div className="loader"></div>
+      </div>
+    );
+
   if (error) return <NotFound />;
   if (!singleEvent) return <p>No event found.</p>;
 
   return (
     <section>
-      {singleEvent ? (
-        <div className="event-section">
-          <div className="single-event-img">
-            {singleEvent.image_url && (
-              <img src={singleEvent.image_url} alt={singleEvent.event_name} />
-            )}
-          </div>
-          <div className="ev ev-title">
+      {singleEvent && (
+        <div className="container-view-event">
+        <div className="content-view-event">
+        <div className="view-event">
 
-          <h3>{singleEvent.event_name}</h3>
-          </div>
 
-          <p>Category: {singleEvent.category}</p>
           
-          <div className="ev ev-date">
-          <h4>Date: </h4>
-          <p>{new Date(singleEvent.start_t).toLocaleString()}</p>
-          </div>
-      
-      <div className="ev">
-          <AddToCalendar event={singleEvent} />
-        </div>
-            
-          <div className="ev">
-            <h4>Ticket Price:</h4>{" "}
-            <div className="ticket-price">
-            <p > {singleEvent.ticket_price > 0
-              ? `${singleEvent.ticket_price}`
-              : "Free"}
-          </p></div>
-          </div>
-          <div className="ev ev-descrption">
-          <h4>Description</h4>
-          <p>{singleEvent.description}</p>
+          {/* title */}
+          <div className="ve title border-around">
+            <h3>{singleEvent.event_name}</h3>
           </div>
 
-          <div className="ev ev-guests">
-            <h4>Attendees:</h4>
-            <p>
-            {guests && guests.length > 0
-                ? guests.length
-                : "Be the first to sign up"}
-            </p>
-          </div>
-
-          <div className="ev ev-address">
-          <h4>Address: </h4>
-            <p>{singleEvent.first_line_address},{" "}
-            {singleEvent.second_line_address}, {singleEvent.city}{" "}
-            {singleEvent.postcode}
-          </p>
-          </div>
-
-          <div className="ev">
-            {!foundGuest ? (
-              <button type="button" 
-              onClick={handleSignUp} disabled={signingUp}>
-               {signingUp ? "Signing Up..." : "Sign Up"}
-              </button>
-            ) : (
-              <div className="ev ev-already-s">
-                <p >You have already signed up for this event.</p>
+          <div className="event-category">
+                <p>Category: {singleEvent.category}</p>
               </div>
-            )}
+{/* cols */}
+          <div className="two-cols">
+ {/* first col */}
+            <div className="first-col">
+             
+
+<div className="ve-el">
+              <h4 className="bolder-subtitle">Date: </h4>
+              <div className="date-time border-around">
+                <p>{new Date(singleEvent.start_t).toLocaleString()}</p>
+              </div>
+              </div>
+
+              <div className="event-price">
+                <h4 className="bolder-subtitle">Ticket Price:</h4>
+                <div className="ticket-price border-around">
+                  <p>
+                    {singleEvent.ticket_price > 0
+                      ? `${singleEvent.ticket_price}`
+                      : "Free"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="">
+                <h4>Attendees: {' '}
+                  {guests && guests.length > 0
+                    ? guests.length
+                    : "Be the first to sign up"}
+                    </h4>
+             
+              </div>
+            </div>
+
+            <div className="second-col">
+              <div className="single-event-img">
+                {singleEvent.image_url && (
+                  <img
+                    src={singleEvent.image_url}
+                    alt={singleEvent.event_name}
+                  />
+                )}
+              </div>
+            </div>
           </div>
-          <div className="ev-map"></div>
-          <p></p>
+{/* close 2nd col */}
+{/* lower subsection */}
+          <div className="ve">
+            <h4 className="bolder-subtitle">Additional information</h4>
+            <div className="">
+              <p>{singleEvent.description}</p>
+            </div>
+          </div>
+
+          <div className="ve">
+            <h4 className="bolder-subtitle">Address: </h4>
+            <div className="address border-around">
+            <p>
+              {singleEvent.first_line_address},{" "}
+              {singleEvent.second_line_address}, {singleEvent.city}{" "}
+              {singleEvent.postcode}
+            </p></div>
+          </div>
+
+          <div className="ve action-btns">
+            <div className="addTo-calendar">
+              <AddToCalendar event={singleEvent} />
+            </div>
+
+            <div className="ve central-position">
+              {!foundGuest ? (
+                <button
+                className="signUp"
+                  type="button"
+                  onClick={handleSignUp}
+                  disabled={signingUp}
+                >
+                  {signingUp ? "Signing Up..." : "Sign Up"}
+                </button>
+              ) : (
+                <div className="ev ev-already-s">
+                  <p>You have already signed up for this event.</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      ) : (
-        <p> Loading ... </p>
+        </div>
+        </div>
       )}
     </section>
   );

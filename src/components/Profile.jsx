@@ -1,47 +1,87 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { Link } from "react-router-dom";
-import Loading from "./errors/Loading";
 import "./errors/errors.css";
+import { getUserProfile } from '../api';
+import UserEvents from './UserEvents';
 
 const Profile = () => {
-    const { user, loading } = useContext(UserContext);
+    const { user } = useContext(UserContext);
+    const [profile, setProfile] = useState({});
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);  
 
-    if (loading) return <Loading />;
+    useEffect(() => {
+        if (user) {
+            const fetchUserProfile = async () => {
+                try {
+                    const profile = await getUserProfile();
+                    setProfile(profile);
+                } catch (error) {
+                    console.error('Error fetching user profile:', error);
+                    setError(true);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchUserProfile();
+        } else {
+            setLoading(false);
+        }
+    }, [user]);
 
     if (!user) {
-        return <div>No user logged in</div>;
-      }
+        return (
+          <div className="loading-container">
+          
+                <p>No user logged in. Please, <Link to="/login">login</Link>.</p>
+            </div>
+        );
+    }
+
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <div className="loader"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return <p>Error loading profile</p>;
+    }
 
     return (
-        <div className="page_404">
-            {user ? (
-                <>
-                    <div className="ev fouro-four-title">
+        <div className="">
+            {user && profile ? (
+                <div>
+                    <div className="">
                         <h1>Profile</h1>
                     </div>
-                    <div className="ev-notf">
+                    <div className="">
                         <p>userid: {user.id}</p>
                     </div>
-                   
-                    <div className="ev-notf">
+                    <div className="">
                         <p>Email: {user.email}</p>
                     </div>
-                    <div className="ev-notf">
+                    <div className="">
                         <p>Role: {user.role}</p>
                     </div>
-                    {/* <div className="ev-notf">
-                        <img src={user.role} alt="User Thumbnail" />
-                    </div> */}
+
+                    <UserEvents />
+
                     {user.role === "admin" && (
-                        <div className="admin-part">
+                        <div className="">
                             <p>If user is admin you can see this</p>
                             <p><Link to={"/create-event"}>Create new event</Link></p>
                         </div>
                     )}
-                </>
+                </div>
             ) : (
-                <p>You need to log in first.</p>
+                <div>
+                    <p>You need to log in first.</p>
+                </div>
             )}
         </div>
     );

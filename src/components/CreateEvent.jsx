@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { UserContext } from '../contexts/UserContext';
 import { postEvent, getCategories, getLocations } from '../api';
 import TimePickerField from './TimePickerField';
-import Loading from './errors/Loading';
+ 
 
 const CreateEvent= () => {
     const { user, loading } = useContext(UserContext);
@@ -62,7 +62,9 @@ const CreateEvent= () => {
             setSubmitting(false); // Set submitting to false if user is not admin
         }
   }
-  if (isLoading) return <Loading />;
+  if (isLoading) return <div className="loading-container">
+  <div className="loader"></div>
+  </div> ;
 
  
   return (

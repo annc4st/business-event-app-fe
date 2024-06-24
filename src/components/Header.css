@@ -147,7 +147,7 @@
       padding: 0 0 0 1em;
     }
     .header-greet {
-      grid-column: 5/9;
+      grid-column: 6/10;
     }
     .menu-btn {
       display: none;

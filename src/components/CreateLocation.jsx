@@ -25,10 +25,6 @@ const CreateLocation = () => {
     city: Yup.string().required('City is required').test('is-valid-city', 'Invalid City', (value) => validator.isBtcAddress(value, 'any')),
   });
  
-      // to change state of the fields of the form
-
-
-
       const handleSubmit= (values, { setSubmitting }) => {
   
         if(user.role==="admin" ){
