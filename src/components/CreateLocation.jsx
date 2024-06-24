@@ -21,8 +21,8 @@ const CreateLocation = () => {
       .test('is-valid-postcode', 'Invalid postcode', (value) => validator.isPostalCode(value, 'any')),
       // .matches(postcodeRegex, 'Invalid postcode'),
     first_line_address: Yup.string().required('First line of address is required'),
-    second_line_address: Yup.string(),
-    city: Yup.string().required('City is required').test('is-valid-city', 'Invalid City', (value) => validator.isBtcAddress(value, 'any')),
+    second_line_address: Yup.string().required('Second line of address is required'),
+    city: Yup.string().required('City is required').test('is-valid-city', 'Invalid City', (value) => validator.isAlpha(value, 'en-US', { ignore: ' ' })),
   });
  
       const handleSubmit= (values, { setSubmitting }) => {

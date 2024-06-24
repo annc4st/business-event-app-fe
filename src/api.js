@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const eventsApi = axios.create ({
-    baseURL : "http://localhost:9000/api",
-    // baseURL : "https://business-event-app.onrender.com/api",
+    // baseURL : "http://localhost:9000/api",
+    baseURL : "https://business-event-app.onrender.com/api",
     withCredentials: true,
 })
 
@@ -39,14 +39,6 @@ export const postEvent = async (newEvent) => {
     const response = await eventsApi.post(`/events`, newEvent);
     return response.data;
 }
-
-//from auth/google
-// export const getUser = () => {
-//     return eventsApi.get('/auth/user', { withCredentials: true })
-//     .then((response) => {
-//         return response.data
-//     })
-// }
 
 
 //add user to guestlist for event when user signs up
@@ -148,7 +140,8 @@ export const loginUser = async ( credentials) => {
         const response = await eventsApi.post(`/auth/login`, credentials);
       return  response.data
     } catch (error) {
-        if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message) {
+            // console.log(error.response.data.message)
             throw new Error(error.response.data.message);
           } else {
             throw new Error('An unexpected error occurred.');

@@ -29,7 +29,7 @@ const Header = () => {
       </div>
 
 
-      {isLogged && user && (
+      {user && (
         <div className="header-greet">
           <div className="logged-user">
             <p>Welcome, {user.username}!</p>
@@ -39,7 +39,7 @@ const Header = () => {
         
       ) }
 
-      {!isLogged && !user && (
+      {!user && (
 
         <div className="header-greet">
           <div className="logged-user">

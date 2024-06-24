@@ -34,7 +34,6 @@ const Profile = () => {
     if (!user) {
         return (
           <div className="loading-container">
-          
                 <p>No user logged in. Please, <Link to="/login">login</Link>.</p>
             </div>
         );
@@ -53,36 +52,37 @@ const Profile = () => {
     }
 
     return (
-        <div className="">
-            {user && profile ? (
-                <div>
-                    <div className="">
-                        <h1>Profile</h1>
+        <div className="profile-page">
+            { user && profile  && (
+               <div> 
+                    <div className="profile-dets">
+                    <div className="content">
+                    
+                        <h2>Profile Information</h2>
+                        
+                    <div className="profile-el">
+                        <p>user Id: {profile.id}</p>
                     </div>
-                    <div className="">
-                        <p>userid: {user.id}</p>
+                    <div className="profile-el">
+                        <p>Email: {profile.email}</p>
                     </div>
-                    <div className="">
-                        <p>Email: {user.email}</p>
+                    <div className="profile-el">
+                        <p>Role: {profile.role}</p>
                     </div>
-                    <div className="">
-                        <p>Role: {user.role}</p>
                     </div>
-
+                    </div>
+                    
                     <UserEvents />
 
                     {user.role === "admin" && (
-                        <div className="">
+                        <div className="admin-section">
                             <p>If user is admin you can see this</p>
                             <p><Link to={"/create-event"}>Create new event</Link></p>
                         </div>
                     )}
+               
                 </div>
-            ) : (
-                <div>
-                    <p>You need to log in first.</p>
-                </div>
-            )}
+            ) }
         </div>
     );
 };

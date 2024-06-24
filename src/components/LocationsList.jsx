@@ -11,7 +11,7 @@ const LocationsList = () => {
     useEffect(()=> {
         setIsLoading(true);
         getLocations().then((fetchedLocations) => {
-            console.log(fetchedLocations);
+            // console.log(fetchedLocations);
             setIsLoading(false);
             setLocations(fetchedLocations)
         });

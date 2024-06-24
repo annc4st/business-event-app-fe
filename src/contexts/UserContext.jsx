@@ -6,19 +6,18 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [isLogged, setIsLogged] = useState(false);
+    // const [isLogged, setIsLogged] = useState(false);
 
 
     const login = async (credentials) => {
       setLoading(true);
       try {
           const response = await loginUser(credentials);
-          // const profile = await getUserProfile();
-          // console.log(" >> ", profile)
+  
           if (response && response.user) {
-            // console.log("response.user >> ", response.user)
+            console.log("response.user >> ", response.user)
               setUser(response.user);
-              setIsLogged(true);
+              // setIsLogged(true);
               return true;
           } else {
               console.error('Error logging in: User data not found in response');
@@ -34,7 +33,7 @@ export const UserProvider = ({ children }) => {
       try {
         await logoutUser();
         setUser(null);
-        setIsLogged(false); 
+        // setIsLogged(false); 
       } catch (error) {
         console.error('Error logging out:', error);
       }
@@ -42,7 +41,7 @@ export const UserProvider = ({ children }) => {
     
     
     return (
-        <UserContext.Provider value={{ user, loading, logout, login, isLogged }}>
+        <UserContext.Provider value={{ user, loading, logout, login }}>
             {children}
         </UserContext.Provider>
     );

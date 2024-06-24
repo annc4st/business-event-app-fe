@@ -5,12 +5,21 @@ import './Login.css';
 
 const Login = () => {
 
+  // const context = useContext(UserContext);
+ 
+
+  // if (!context) {
+  //   //// Context is undefined, return null or a fallback UI
+  //   return null;
+  // }
+  // const { login } = context;
+
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
   const [error, setError ] = useState('');
-  const {login }  = useContext(UserContext);
+  const { login }  = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {

@@ -36,7 +36,6 @@ function App() {
             <Route path="/create-location" element={<CreateLocation />} /> 
             <Route path="/create-event" element={<CreateEvent />} />
             <Route component={NotFound} />
-
  
           </Routes>
     

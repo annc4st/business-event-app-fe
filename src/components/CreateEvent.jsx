@@ -49,7 +49,7 @@ const CreateEvent= () => {
   const handleSubmit = (values, { setSubmitting} ) => {
     if(user.role==="admin"){
         postEvent(values).then((response) => {
-            console.log('Event created:', response.data);
+            // console.log('Event created:', response.data);
           navigate('/');
         })
         .catch((error) => {
