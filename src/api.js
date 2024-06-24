@@ -40,19 +40,12 @@ export const postEvent = async (newEvent) => {
     return response.data;
 }
 
-export const getUser = () => {
-    return eventsApi.get('/auth/user', { withCredentials: true })
-    .then((response) => {
-        return response.data
-    })
-}
-
 
 //add user to guestlist for event when user signs up
 export const addGuest = (event_id, userId) => {
     return eventsApi.patch(`/events/${event_id}/guests`,  { id: userId })
     .then((response) => {
-        console.log("api.js line 60>> ",response.data);
+        // console.log("api.js line 60>> ",response.data);
         return response.data;
     })
     .catch((error) => {
@@ -107,6 +100,73 @@ export const deleteLocation = (location_id) => {
         // console.log(`Location ${location_id} has been deleted successfully`)
     })
     .catch((error) => {
-        // console.log('Error : ', error)
+        console.log('Error : ', error)
     })
 }
+
+// id??
+export const getUserProfile = async () => {
+    try {
+        const response = await eventsApi.get(`/auth/profile` );
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      throw error;
+    }
+  };
+
+export const registerUser = async (userData) => {
+    try {
+        const response = await eventsApi.post(`/auth/register`, userData)
+ 
+        return response.data;
+    } catch(error) {
+ 
+        if (error.response && error.response.data && error.response.data.message) {
+            // console.log()
+           
+            throw new Error(error.response.data.message);
+          } else {
+            console.log(error);
+            throw new Error('An error occurred. Looks like we have account with this username or email.');
+          }
+    }
+}
+
+// Function to login a user
+export const loginUser = async ( credentials) => {
+
+    try {
+        const response = await eventsApi.post(`/auth/login`, credentials);
+      return  response.data
+    } catch (error) {
+        if (error.response.data.message) {
+            // console.log(error.response.data.message)
+            throw new Error(error.response.data.message);
+          } else {
+            throw new Error('An unexpected error occurred.');
+          }
+    }
+  };
+
+  // Function to logout a user
+export const logoutUser = async () => {
+    try {
+       await eventsApi.post(`/auth/logout`);
+    } catch (error) {
+      console.error('Error logging out:', error);
+      throw error;
+    }
+  };
+
+  // Function to retrieven events user signed up for
+  export const getUserSignedUpEvents = async() => {
+    try {
+        const response = await eventsApi.get(`/auth/profile/events`)
+        return response.data;
+    } catch(error){
+        console.error('Error fetching signed-up events:', error);
+        throw error;
+    }
+
+  }

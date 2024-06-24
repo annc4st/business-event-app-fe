@@ -11,13 +11,15 @@ const LocationsList = () => {
     useEffect(()=> {
         setIsLoading(true);
         getLocations().then((fetchedLocations) => {
-            console.log(fetchedLocations);
+            // console.log(fetchedLocations);
             setIsLoading(false);
             setLocations(fetchedLocations)
         });
     },  []);
 
-    if (isLoading) return <div className="loading-p">loading...</div>;
+    if (isLoading) return <div className="loading-container">
+      <div className="loader"></div>
+      </div> ;
     if (error) return <p>No Results Found</p>;
 
 

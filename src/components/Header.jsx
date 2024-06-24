@@ -1,24 +1,20 @@
 import React, { useState, useContext } from "react";
-import { UserContext, UserProvider } from "../contexts/UserContext";
+import { UserContext} from "../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import LogoutBtn from "./LogoutBtn";
 
 import "./Header.css";
 
 const Header = () => {
   const context = useContext(UserContext);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   if (!context) {
     //// Context is undefined, return null or a fallback UI
     return null;
   }
-  const { user, loading, logout } = context;
-  const handleLogout = async () => {
-    await logout();
-    navigate("/");
-  };
+  const { user, loading, isLogged} = context;
 
-  if (loading) return <p>Loading...</p>;
   return (
     <header className="header">
       <input className="menu-btn" type="checkbox" id="menu-btn" />
@@ -33,21 +29,26 @@ const Header = () => {
       </div>
 
 
-      {user ? (
+      {user && (
         <div className="header-greet">
           <div className="logged-user">
             <p>Welcome, {user.username}!</p>
-            <img src={user.thumbnail} alt="User Thumbnail" />
           </div>
-          <button onClick={handleLogout}>Logout</button>
+          <LogoutBtn />
         </div>
-      ) : (
+        
+      ) }
+
+      {!user && (
+
         <div className="header-greet">
           <div className="logged-user">
             <p>Welcome, Stranger!</p>
-            <a href="https://business-event-app.onrender.com/api/auth/google">
-              <button>Login with Google+</button>
-            </a>
+            <Link to={'/login'}><button>Login</button></Link>
+          </div>
+          <div className="logged-user">
+           
+            <Link to={'/register'}><button>Register</button></Link>          
           </div>
         </div>
       )}

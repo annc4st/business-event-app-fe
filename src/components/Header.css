@@ -99,17 +99,25 @@
     display: flex;
     align-items: center;
   }
+  .logged-user > p{
+    font-size: 1em;
+  }
   .header-greet button {
-    padding: 5px;
+    padding: 0.6em 0.6em;
     border: none;
-    color: var(--bg-body);
    font-weight: 800;
+   background-color: transparent;
+   color: #39364f;
+  }
+
+  .header-greet button:hover{
+    background-color: var(--border);
   }
   
   .logged-user {
     display: flex;
     align-items: center;
-    gap: 10px;
+    /* gap: 10px; */
     color: var(--bg-body);
     margin-right: 8px;
   }
@@ -123,6 +131,8 @@
     color: var(--bg-body);
     padding: 0 0 1em 1em;
   }
+ 
+
   
   /* Responsive styles */
   @media screen and (min-width: 620px){
@@ -137,7 +147,7 @@
       padding: 0 0 0 1em;
     }
     .header-greet {
-      grid-column: 6/9;
+      grid-column: 6/10;
     }
     .menu-btn {
       display: none;

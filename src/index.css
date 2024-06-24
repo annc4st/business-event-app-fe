@@ -1,13 +1,13 @@
 :root {
-  font-family: 'MPLUS1p-Regular', sans-serif; 
-  /* Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
-  line-height: 1.5;
+  font-family: 'MPLUS1p-Regular', Inter, system-ui, Avenir, Helvetica, sans-serif; 
+   line-height: 1.2;
   font-weight: 400;
 
   --text: #FFFFFF;
-  --bg-body: #161616;
+  --bg-body:  #16181D; 
+  /* // #161616; */
   --bg-card: #2e2b2b;
-  --btn-color:  #FFFF69;
+  --btn-color:  #ffa500;
   --border: #A6CCFF;
   --active-color: #A6CCFF;
 }
@@ -20,8 +20,49 @@ a {
   color:#53b8f2;
 }
 a:hover {
-  color: #535bf2;
+  color: #ffa50097;
 }
+
+.loading-container{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  padding: 20px;
+  /* width: 100%;
+  height: 100vh;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 1000;  */
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #0000;
+  border-right-color: #ffa50097;
+  position: relative;
+  animation: l24 1s infinite linear;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: inherit;
+  animation: inherit;
+  animation-duration: 2s;
+}
+.loader:after {
+  animation-duration: 4s;
+}
+@keyframes l24 {
+  100% {transform: rotate(1turn)}
+}
+
 
 /* reset */
 body, p, a, ul, li {
@@ -35,7 +76,7 @@ li {
 
 /* base styles */
 body {
-  background: var(--bg-body);
+  background-color: #16181D;
   color: var(--text);
   overflow-x: hidden;
   font-size: 16px;
@@ -47,7 +88,6 @@ h1, h2, h3{
 }
 
 button {
-  background-color: var(--btn-color);
   border-radius: 8px; 
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -91,7 +131,7 @@ input, select {
   grid-template-columns: repeat(3, 1fr);
   gap: 2em;
   background-color: var(--bg-card);
-  border-radius: 8px;
+  /* border-radius: 8px; */
   padding: 8px 0;
   max-width: 1060px;
   margin: 0 auto;
@@ -168,7 +208,7 @@ input, select {
   
  
 /* create event form */
-.create-event, .post-location, .event-section {
+.create-event, .post-location {
    margin: auto;
   margin-top: 1em;
   max-width: 400px;
@@ -177,49 +217,64 @@ input, select {
 .form-group, .react-datepicker-wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.5em; /* Adds space between form groups */
+  margin-bottom: 0.5em; /* space between form groups */
+}
+
+.form-group input {
+  background-color: var(--bg-card);
+  color: var(--text); 
 }
 .form-btn {
   margin: 1em auto 1em auto;
+  background-color: var(--btn-color);
 }
 
-
-/* ViewEvent */
-.single-event-img img{
-  max-width: 300px;
+.react-datepicker__input-container {
+  margin-left: 0.5em;
 }
-.ev {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1em; 
+/* viewEvent -> seprate css */
 
+/* admin and profile */
+.profile-page {
 }
-.ev-title {
-  border: solid 1px var(--border);
-  border-radius: 8px;
+
+.profile-dets {
+  margin: 1em 1em 1em 1em;
   background-color: var(--bg-card);
-}
-.ev-title > h3{
-font-size: 1.2em;
-font-weight: 200;
-text-align: left;
-/* padding-left: 8px; */
-margin: 8px auto;
+  border-radius: 5px;
+
 }
 
-.ev-already-s {
-  background-color: var(--bg-card);
-  border: solid 1px var(--border);
-    border-radius: 8px;
+.content {
+  padding: 1em;
 }
-.ticket-price {
-  margin: 8px;
-  background-color: var(--bg-card);
-  border: solid 1px var(--border);
-  border-radius: 8px;
+
+.profile-el p{
+  text-align: left;
 }
-.ev-already-s > p {
-  margin: 8px auto;
+
+
+.admin-section {
+  border: 1px solid var(--border);
+  margin: 1em;
+}
+
+.user-signedup-event {
+  margin: 1em 2em;
+ 
+}
+.user-signedup-event-details h4 {
+  cursor: pointer;
+  color: var(--border);
+ 
+
+}
+ 
+.user-signedup-event-details p{
+  text-align: left;
+  margin: 0;
+  padding-left: 0;
+  font-size: 16px;
 }
 
 /* small tablet styles */

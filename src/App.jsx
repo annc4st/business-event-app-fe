@@ -11,6 +11,9 @@ import LocationsList from "./components/LocationsList";
 import CreateEvent from './components/CreateEvent';
 import CreateLocation from "./components/CreateLocation";
 import NotFound from "./components/errors/NotFound";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Hero from './components/Hero';
 
 
 function App() {
@@ -18,9 +21,13 @@ function App() {
     <>
       <UserProvider>
         <Header />
+        <Hero />
         
         
           <Routes>
+            <Route path = "/login" element={<Login />} />
+            {/* <Route path = "/logout" /> */}
+            <Route path="/register" element={<Register />} />
             <Route path="/" element={<EventsList />} />
             <Route path="/:category" element={<EventsList />} />
             <Route path="/events/:event_id" element={<ViewEvent />} />

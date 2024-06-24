@@ -3,7 +3,6 @@ import EventItem from "./EventItem";
 import React, { useEffect, useState } from "react";
 import {Link, Navigate, useNavigate, useParams} from 'react-router-dom';
 import NotFound from './errors/NotFound';
-import Loading from "./errors/Loading";
 
 
 
@@ -47,7 +46,9 @@ const EventsList = () => {
     };
 
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <div className="loading-container">
+      <div className="loader"></div>
+      </div> ;
     if (error) return <NotFound />;
     
 

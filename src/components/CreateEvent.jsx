@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { UserContext } from '../contexts/UserContext';
 import { postEvent, getCategories, getLocations } from '../api';
 import TimePickerField from './TimePickerField';
-import Loading from './errors/Loading';
+ 
 
 const CreateEvent= () => {
     const { user, loading } = useContext(UserContext);
@@ -49,7 +49,7 @@ const CreateEvent= () => {
   const handleSubmit = (values, { setSubmitting} ) => {
     if(user.role==="admin"){
         postEvent(values).then((response) => {
-            console.log('Event created:', response.data);
+            // console.log('Event created:', response.data);
           navigate('/');
         })
         .catch((error) => {
@@ -62,7 +62,9 @@ const CreateEvent= () => {
             setSubmitting(false); // Set submitting to false if user is not admin
         }
   }
-  if (isLoading) return <Loading />;
+  if (isLoading) return <div className="loading-container">
+  <div className="loader"></div>
+  </div> ;
 
  
   return (
@@ -163,14 +165,16 @@ const CreateEvent= () => {
       </Formik>
 
       <div>
-        <p>If you cannot find the location, create it first <Link to={'/create-location'}>here</Link>.</p>
+          <p>If you cannot find the location, create it first <Link to={'/create-location'}>here</Link>.</p>
       </div>
 
             
             </div>
         ) : (
+          <div className="loading-container">
           <div className="unauth-user">
             <p>If you want to create new event, contact us.</p>
+            </div>
             </div>
         )
     }
