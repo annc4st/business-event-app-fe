@@ -130,7 +130,7 @@ input, select {
   grid-template-columns: repeat(3, 1fr);
   gap: 2em;
   background-color: var(--bg-card);
-  border-radius: 8px;
+  /* border-radius: 8px; */
   padding: 8px 0;
   max-width: 1060px;
   margin: 0 auto;

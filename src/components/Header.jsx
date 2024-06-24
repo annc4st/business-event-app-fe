@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { UserContext, UserProvider } from "../contexts/UserContext";
+import { UserContext} from "../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import LogoutBtn from "./LogoutBtn";
 

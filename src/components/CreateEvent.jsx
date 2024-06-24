@@ -165,14 +165,16 @@ const CreateEvent= () => {
       </Formik>
 
       <div>
-        <p>If you cannot find the location, create it first <Link to={'/create-location'}>here</Link>.</p>
+          <p>If you cannot find the location, create it first <Link to={'/create-location'}>here</Link>.</p>
       </div>
 
             
             </div>
         ) : (
+          <div className="loading-container">
           <div className="unauth-user">
             <p>If you want to create new event, contact us.</p>
+            </div>
             </div>
         )
     }

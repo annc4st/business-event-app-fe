@@ -13,6 +13,7 @@ import CreateLocation from "./components/CreateLocation";
 import NotFound from "./components/errors/NotFound";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Hero from './components/Hero';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
     <>
       <UserProvider>
         <Header />
+        <Hero />
         
         
           <Routes>
