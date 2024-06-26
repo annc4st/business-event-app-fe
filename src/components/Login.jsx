@@ -2,17 +2,11 @@ import React, { useState, useContext} from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
+import * as Yup from 'yup';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 const Login = () => {
-
-  // const context = useContext(UserContext);
  
-
-  // if (!context) {
-  //   //// Context is undefined, return null or a fallback UI
-  //   return null;
-  // }
-  // const { login } = context;
 
   const [credentials, setCredentials] = useState({
     username: "",

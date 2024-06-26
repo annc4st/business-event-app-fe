@@ -3,6 +3,7 @@ import { registerUser } from '../api';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+
 const Register = () => {
   
 
@@ -14,7 +15,6 @@ const Register = () => {
     email: '',
     role: 'user',
   });
-
 
 
   const handleChange = (e) => {

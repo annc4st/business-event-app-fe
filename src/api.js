@@ -108,6 +108,7 @@ export const deleteLocation = (location_id) => {
 export const getUserProfile = async () => {
     try {
         const response = await eventsApi.get(`/auth/profile` );
+        console.log(response, "response data ", response.data)
       return response.data;
     } catch (error) {
       console.error('Error fetching user profile:', error);
