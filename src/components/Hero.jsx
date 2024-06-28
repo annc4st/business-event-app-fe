@@ -8,7 +8,7 @@ const Hero = () => {
    
         <div className="hero">
          <img
-        src="../src/assets/pictures/Screenshot_247.svg"
+        src="/pictures/Screenshot_247.svg"
         alt="Hero Large"
         className="hero-image hero-image-large"
       />
