@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const eventsApi = axios.create ({
-    // baseURL : "http://localhost:9000/api",
-    baseURL : "https://business-event-app.onrender.com/api",
+    baseURL : "http://localhost:9000/api",
+    // baseURL : "https://business-event-app.onrender.com/api",
     withCredentials: true,
 })
 
@@ -108,7 +108,7 @@ export const deleteLocation = (location_id) => {
 export const getUserProfile = async () => {
     try {
         const response = await eventsApi.get(`/auth/profile` );
-        console.log(response, "response data ", response.data)
+        // console.log(response, "response data ", response.data)
       return response.data;
     } catch (error) {
       console.error('Error fetching user profile:', error);
@@ -153,7 +153,8 @@ export const loginUser = async ( credentials) => {
   // Function to logout a user
 export const logoutUser = async () => {
     try {
-       await eventsApi.post(`/auth/logout`);
+        const response = await eventsApi.post('/auth/logout');
+        // console.log(response.data.message);
     } catch (error) {
       console.error('Error logging out:', error);
       throw error;
